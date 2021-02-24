@@ -135,6 +135,8 @@ router bgp 1
    bgp origin-as validation enable
  rpki server 192.1.0.2
 ```
+*note*: In XR before 6.6.3, the default RPKI behavior is that validation is enabled in each AFI, and had to be specifically disabled if it was not wanted.  In XR 6.6.3 and later, the default behavior is disabled and validation must be enabled.  It is not possible to enter the enable commands in versions before 6.6.3, so any XR router that is upgraded to 6.6.3 will come up with validation disabled and the specific command lines above must be entered manually upon first bootup.
+
 Match and deny based on RPKI validation state
 ```
 route-policy rpki-validate
@@ -148,4 +150,5 @@ Apply policy in policy chain where needed
 route-policy ebgp-in
   apply rpki-validate
   <rest of policy>
+end-policy
 ```
